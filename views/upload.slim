@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title Simple Avatar Hosting
+  body
+    h1 Simple Avatar Hosting
+
+    p
+      div Your avatar's email address: #{@avatar.email}
+      img style="margin:10px;" src="#{@avatar.image_path}"
+    p
+      img style="margin:10px;" src="#{@avatar.image_path}?s=60"
+      img style="margin:10px;" src="#{@avatar.image_path}?s=120"
+      img style="margin:10px;" src="#{@avatar.image_path}?s=240"
+      img style="margin:10px;" src="#{@avatar.image_path}?s=480"
+
+    a href="/avatar" back

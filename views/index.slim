@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title Simple Avatar Hosting
+  body
+    h1 Simple Avatar Hosting
+
+    - if @notice
+      p style="color:red" #{@notice}
+
+    p Please select your avatar image
+    form action="/avatar" method="post" enctype="multipart/form-data"
+      input type="file" name="file"
+      input type="submit" value="upload"
+
