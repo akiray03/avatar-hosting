@@ -1,4 +1,4 @@
-Simple Avatars
+Avatar Hosting
 ==============
 
 (gravatars clone apps)
