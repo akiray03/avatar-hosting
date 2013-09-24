@@ -55,7 +55,23 @@ class AvatarApp < Sinatra::Base
     unless avatar
       # not found
       if AvatarConfig::GRAVATOR_REDIRECT
-        redirect "#{AvatarConfig::GRAVATOR_REDIRECT}#{request.path}?#{request.query_string}"
+        q = {}
+        if params[:d] || params[:default]
+          d = (params[:d] || params[:default]).to_s
+          puts "default URL1: #{d}"
+          if d.include? 'github.com'
+            q[:d] = d
+          else
+            q[:d] = d.sub(/https?:\/\/[^\/]+/, 'http://assets.github.com/')
+          end
+          puts "default URL2: #{q[:d]}"
+        end
+        if params[:s] || params[:size]
+          q[:s] = (params[:s] || params[:size])
+        end
+        q = q.map{|k,v| [k, CGI.escape(v)].join '=' }.join '&'
+        puts "Redirect to :  #{AvatarConfig::GRAVATOR_REDIRECT}#{request.path}?#{q}"
+        redirect "#{AvatarConfig::GRAVATOR_REDIRECT}#{request.path}?#{q}"
       elsif params[:d]
         redirect params[:d]
       else
@@ -68,7 +84,7 @@ class AvatarApp < Sinatra::Base
       type = params[:format]
     end
     size = nil
-    if params[:s] && params[:s] =~ /^\d+$/
+    if (params[:s] || params[:size]) && (params[:s] || params[:size]) =~ /^\d+$/
       size = params[:s].to_s.to_i
       size = nil  if size <= 0 or size > 2048
     end

@@ -11,6 +11,8 @@ require 'rack-flash'
 require 'slim'
 require 'RMagick'
 
+require 'uri'
+require 'cgi'
 require 'digest/md5'
 require 'fileutils'
 
